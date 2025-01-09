@@ -11,6 +11,11 @@
       "title": "Page with Pattern"
     },
     {
+      "name": "home-page",
+      "postTypes": ["page"],
+      "title": "Home Page"
+    },
+    {
       "name": "single-countries",
       "postTypes": ["post"],
       "title": "Countries Details"
