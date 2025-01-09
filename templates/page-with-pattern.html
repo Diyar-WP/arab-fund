@@ -1,0 +1,28 @@
+<!-- wp:template-part {"slug":"header","theme":"arab-fund","tagName":"header","area":"header","className":"site-header"} /-->
+
+<!-- wp:group {"tagName":"main","metadata":{"name":"Inner Page Layout","categories":[],"patternName":"core/block/15275"},"className":"inner-page-layout page-content","layout":{"type":"default"}} -->
+<main class="wp-block-group inner-page-layout page-content">
+    <!-- wp:group {"metadata":{"name":"Inner Page Navigation"},"className":"inner-page-navigation","layout":{"type":"default"}} -->
+    <div class="wp-block-group inner-page-navigation"><!-- wp:shortcode -->
+        [page_main_heading]
+        <!-- /wp:shortcode -->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- wp:group {"metadata":{"name":"BreadCrumb Container"},"className":"inner-page-title-wrapper","layout":{"type":"default"}} -->
+    <div class="wp-block-group inner-page-title-wrapper"><!-- wp:post-title /-->
+        <!-- wp:shortcode -->
+        [wpseo_breadcrumb]
+        <!-- /wp:shortcode -->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- wp:group {"className":"pages-main-content pattern-bg"} -->
+    <div class="wp-block-group pages-main-content pattern-bg">
+        <!-- wp:post-content {"lock":{"move":false,"remove":true},"layout":{"type":"default"}} /-->
+    </div>
+    <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","theme":"arab-fund","tagName":"footer","area":"footer"} /-->
