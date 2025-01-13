@@ -33,6 +33,11 @@
       "name": "single-conferences_or_event",
       "postTypes": ["post"],
       "title": "Single Conferences Events"
+    },
+      {
+      "name": "single-conferences-events",
+      "postTypes": ["post"],
+      "title": "Single Conferences Events"
     }
   ],
   "patterns": ["three-columns-of-services", "clients-section"],
