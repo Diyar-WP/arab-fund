@@ -16,6 +16,10 @@
       "title": "Home Page"
     },
     {
+      "name": "single-training-programme",
+      "postTypes": ["post"],
+      "title": "Training Programme"
+    },{
       "name": "single-countries",
       "postTypes": ["post"],
       "title": "Countries Details"
