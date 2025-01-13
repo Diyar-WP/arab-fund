@@ -55,7 +55,7 @@ html[lang="ar"] .en_view {
 .photo-info h6,
 .video-info h6 {
 	background-color: #43B02A;
-	color: #fff;
+	color: #fff !important;
 	border-radius: 0 10px 10px 10px;
 	border: 1px solid #fff;
 	display: inline-block;
