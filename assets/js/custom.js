@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var imgURL = "/wp-content/uploads/2024/09/Language.svg";
+    var imgURL = "/wp-content/uploads/2023/11/Language.svg";
     var $img = $("<img />");
     $img.attr("src", imgURL);
     $(".lang-item a").prepend($img);
