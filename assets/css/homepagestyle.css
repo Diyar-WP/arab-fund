@@ -68,7 +68,7 @@ html[dir='rtl'] .fixed {
 .site-header {
     background-image: url(/wp-content/uploads/2023/12/header_bg_EN.png) !important;
     background-repeat: no-repeat;
-    max-width: 1860px !important;
+/*     max-width: 1860px !important; */
     width: 100% !important;
     padding: 0 50px !important;
     margin: 0 auto;
