@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
     $img.attr("src", imgURL);
     $(".lang-item a").prepend($img);
 
-    $('.elementor-swiper-button').prepend('<img src="/wp-content/themes/hello-elementor-child/assets/images/more_arrow.svg" alt="arrow">')
+    $('.slick-arrow').prepend('<img src="/wp-content/uploads/2025/01/more_arrow.svg" alt="arrow">')
 });
 
 
