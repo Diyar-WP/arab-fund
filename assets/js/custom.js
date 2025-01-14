@@ -741,9 +741,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-// jQuery(document).ready(function () {
-//     console.log("I am  alive")
-//     jQuery('html.wp-toolbar').attr('dir', 'ltr');
-// });
 
-// console.log("I am  alive")
