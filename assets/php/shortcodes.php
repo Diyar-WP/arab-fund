@@ -1241,6 +1241,168 @@ add_shortcode('annual_report_list_shartcode', 'annual_report_list');
 
 
 
+function studies_list() {
+  ob_start(); 
+  $title = $from_date = $to_date = $start_date = $end_date = '';
+  $per_page = -1;
+  $page = get_query_var('paged') ? get_query_var('paged') : 1;
+  if(isset($_POST['filter_btn'])){
+    $title = !empty(filter_var($_POST['title'],FILTER_SANITIZE_STRING)) ? filter_var($_POST['title'],FILTER_SANITIZE_STRING) : '';
+    if(!empty(filter_var($_POST['from_date'],FILTER_SANITIZE_STRING))){
+      $start_date = filter_var($_POST['from_date'],FILTER_SANITIZE_STRING);
+      $from = str_replace('/', '-', $_POST['from_date']);   
+      $from_date = date("Y-m-d", strtotime($from));
+    }
+    if(!empty(filter_var($_POST['to_date'],FILTER_SANITIZE_STRING))){
+      $end_date = filter_var($_POST['to_date'],FILTER_SANITIZE_STRING);
+      $to = str_replace('/', '-', $_POST['to_date']);   
+      $to_date = date("Y-m-d", strtotime($to));
+    }
+    if(!empty($_POST['title'])){
+      $query = new WP_Query( array(
+        'post_type' => 'study',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        's' => $title
+      ));
+    }
+    if(!empty($_POST['from_date']) && !empty($_POST['to_date'])){
+      $query = new WP_Query( array(
+        'post_type' => 'study',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        'meta_query'  => array(
+          array(
+            'key'     => 'study_date',
+            'value'   => array( $from_date, $to_date ),
+            'compare' => 'BETWEEN',
+            'type'    => 'DATE'
+          ),
+        ),
+      ));
+    }
+    if(!empty($_POST['title']) && !empty($_POST['from_date']) && !empty($_POST['to_date'])){
+      $query = new WP_Query( array(
+        'post_type' => 'study',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        's' => $title,
+        'meta_query'  => array(
+          'relation'    => 'AND',
+          array(
+            'key'     => 'study_date',
+            'value'   => array( $from_date, $to_date ),
+            'compare' => 'BETWEEN',
+            'type'    => 'DATE'
+          ),
+        ),
+      ));
+    }
+    if(empty($_POST['title']) && !empty($_POST['from_date']) && empty($_POST['to_date'])){
+      $query = new WP_Query( array(
+        'post_type' => 'study',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        'meta_query'  => array(
+          'relation'    => 'OR',
+          array(
+            'key'     => 'study_date',
+            'value'   => $from_date,
+            'compare' => '>=',
+            'type'    => 'DATE'
+          ),
+        ),
+      ));
+    }
+    if(empty($_POST['title']) && empty($_POST['from_date']) && !empty($_POST['to_date'])){
+      $query = new WP_Query( array(
+        'post_type' => 'study',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        'meta_query'  => array(
+          'relation'    => 'OR',
+          array(
+            'key'     => 'study_date',
+            'value'   => $to_date,
+            'compare' => '<=',
+            'type'    => 'DATE'
+          ),
+        ),
+      ));
+    } 
+    if(empty($_POST['title']) && empty($_POST['from_date']) && empty($_POST['to_date'])){
+      $query = new WP_Query( array(
+        'post_type' => 'study',
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+      ));
+    }   
+ }else{
+    $query = new WP_Query( array(
+      'post_type' => 'study',
+      'posts_per_page' => $per_page,
+      'paged' => $page,
+      'meta_key' => 'study_date',
+      'orderby' => 'meta_value',
+      'order' => 'DESC',
+    ));
+  }
+  
+  $data = '<div class="filter_sec">
+            <form method="post" name="filter_frm" autocomplete="off">
+              <div class="search_sec">
+                <input type="text" name="title" placeholder="'.arabfund_str_display('Keyword').'" value="'.filter_var($title,FILTER_SANITIZE_STRING).'"/>
+              </div>
+              <div class="date_sec">
+                <input type="text" name="from_date" id="from" placeholder="'.arabfund_str_display('From Date').'" value="'.$start_date.'"/>
+                <a href="javascript:void(0)" class="from-date-icon"><img src="'.get_stylesheet_directory_uri() . '/assets/images/date.svg" /></a>
+              </div>
+              <div class="date_sec">
+                <input type="text" name="to_date" id="to" placeholder="'.arabfund_str_display('To Date').'" value="'.$end_date.'"/>
+                <a href="javascript:void(0)" class="to-date-icon"><img src="'.get_stylesheet_directory_uri() . '/assets/images/date.svg" /></a>
+              </div>
+              <div class="btn_sec">                  
+                <input type="button" value="'.arabfund_str_display('Reset').'" class="refresh" onClick="reloadpage()">
+        <input type="submit" name="filter_btn" class="filter-btn" value="'.arabfund_str_display('Filter').'"/>
+              </div>
+            </form>  
+        </div>'; 
+
+$data .= '<div class="report_container" >';
+
+  //$query = new WP_Query('post_type=annual_reports&showposts=-1&order=ASC'); 
+          if ( $query-> have_posts() ) : 
+                  while( $query->have_posts() ):$query->the_post();           
+                  $annualreportsImg = get_the_post_thumbnail_url(get_the_ID(),'full');                    
+                  if($annualreportsImg=="")
+                  {
+                      $annualreportsImg ="../wp-content/themes/hello-elementor-child/assets/images/pdficon.jpg";
+                  }
+                  $post_id = get_the_ID();
+
+   
+     $data .= '<a class="report_box" href="'.get_field("attachment").'" target="_blank">    
+                  <img src=" '. $annualreportsImg .' " alt=' . get_the_title() .'>
+                  <p class="report_body">' . get_the_title() . '</p>
+                 </a>';
+      
+    endwhile;
+      else:
+    $data .= '<div class="not-found">
+              <p>No posts found.</p>
+                </div>';
+    endif;
+    wp_reset_query();
+
+  $data .= '</div>'; 
+       
+  $data .= '<div class="annual-pagination-container"></div>';
+return  $data; 
+} 
+add_shortcode('studies_list_shortcode','studies_list');
+
+
+
 
 // JAE Annual Report List Shortcode Start
 function jae_annual_report_list()
