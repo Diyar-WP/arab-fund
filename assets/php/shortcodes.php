@@ -1376,7 +1376,7 @@ $data .= '<div class="report_container" >';
                   $annualreportsImg = get_the_post_thumbnail_url(get_the_ID(),'full');                    
                   if($annualreportsImg=="")
                   {
-                      $annualreportsImg ="../wp-content/themes/hello-elementor-child/assets/images/pdficon.jpg";
+                      $annualreportsImg ="/wp-content/themes/hello-elementor-child/assets/images/pdficon.jpg";
                   }
                   $post_id = get_the_ID();
 
